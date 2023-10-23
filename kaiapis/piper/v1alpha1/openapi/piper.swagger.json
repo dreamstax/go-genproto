@@ -1,0 +1,533 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Kai piper service",
+    "version": "v1alpha1",
+    "contact": {
+      "name": "Kai API team",
+      "url": "kai-docs.dreamstax.io",
+      "email": "dev@dreamstax.io"
+    }
+  },
+  "tags": [
+    {
+      "name": "Piper"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "Piper_HealthCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1HealthCheckResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 3,
+                "message": "Bad Request",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Bad request",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown Error",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 2,
+                "message": "Something bad happened",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Something bad happened",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Health"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/v1alpha1/pipelines": {
+      "get": {
+        "operationId": "Piper_ListPipelines",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1ListPipelinesResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 3,
+                "message": "Bad Request",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Bad request",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown Error",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 2,
+                "message": "Something bad happened",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Something bad happened",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "pipelines"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "operationId": "Piper_CreatePipeline",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Pipeline"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 3,
+                "message": "Bad Request",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Bad request",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown Error",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 2,
+                "message": "Something bad happened",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Something bad happened",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pipeline",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Pipeline"
+            }
+          }
+        ],
+        "tags": [
+          "pipelines"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/v1alpha1/pipelines/{pipelineId}": {
+      "get": {
+        "operationId": "Piper_GetPipeline",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Pipeline"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 3,
+                "message": "Bad Request",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Bad request",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown Error",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 2,
+                "message": "Something bad happened",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Something bad happened",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "pipelines"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "operationId": "Piper_DeletePipeline",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 3,
+                "message": "Bad Request",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Bad request",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown Error",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 2,
+                "message": "Something bad happened",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Something bad happened",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "pipelines"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "patch": {
+        "operationId": "Piper_UpdatePipeline",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Pipeline"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 3,
+                "message": "Bad Request",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Bad request",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown Error",
+            "schema": {},
+            "examples": {
+              "application/json": {
+                "code": 2,
+                "message": "Something bad happened",
+                "details": [
+                  {
+                    "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+                    "reason": "FliteError: Something bad happened",
+                    "domain": "",
+                    "metadata": {}
+                  }
+                ]
+              }
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pipelineId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "pipeline.name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pipeline.displayName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pipeline.description",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "fieldMask",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "pipelines"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1alpha1HealthCheckResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "v1alpha1ListPipelinesResponse": {
+      "type": "object",
+      "properties": {
+        "pipelines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1alpha1Pipeline"
+          }
+        }
+      }
+    },
+    "v1alpha1Pipeline": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Github Repo",
+    "url": "https://github.com/dreamstax/kai-piper"
+  }
+}
