@@ -8,6 +8,7 @@ package piper
 
 import (
 	context "context"
+	longrunning "google.golang.org/genproto/googleapis/longrunning"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -20,24 +21,30 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Piper_HealthCheck_FullMethodName    = "/kai.piper.v1alpha1.Piper/HealthCheck"
-	Piper_ListPipelines_FullMethodName  = "/kai.piper.v1alpha1.Piper/ListPipelines"
-	Piper_GetPipeline_FullMethodName    = "/kai.piper.v1alpha1.Piper/GetPipeline"
-	Piper_CreatePipeline_FullMethodName = "/kai.piper.v1alpha1.Piper/CreatePipeline"
-	Piper_UpdatePipeline_FullMethodName = "/kai.piper.v1alpha1.Piper/UpdatePipeline"
-	Piper_DeletePipeline_FullMethodName = "/kai.piper.v1alpha1.Piper/DeletePipeline"
+	Piper_ListPipelineJobs_FullMethodName           = "/kai.piper.v1alpha1.Piper/ListPipelineJobs"
+	Piper_GetPipleineJob_FullMethodName             = "/kai.piper.v1alpha1.Piper/GetPipleineJob"
+	Piper_CreatePipelineJob_FullMethodName          = "/kai.piper.v1alpha1.Piper/CreatePipelineJob"
+	Piper_UpdatePipelineJob_FullMethodName          = "/kai.piper.v1alpha1.Piper/UpdatePipelineJob"
+	Piper_DeletePipelineJob_FullMethodName          = "/kai.piper.v1alpha1.Piper/DeletePipelineJob"
+	Piper_RunPipelineJob_FullMethodName             = "/kai.piper.v1alpha1.Piper/RunPipelineJob"
+	Piper_ListPipelineJobExecutions_FullMethodName  = "/kai.piper.v1alpha1.Piper/ListPipelineJobExecutions"
+	Piper_GetPipelineJobExecution_FullMethodName    = "/kai.piper.v1alpha1.Piper/GetPipelineJobExecution"
+	Piper_DeletePipelineJobExecution_FullMethodName = "/kai.piper.v1alpha1.Piper/DeletePipelineJobExecution"
 )
 
 // PiperClient is the client API for Piper service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PiperClient interface {
-	HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error)
-	ListPipelines(ctx context.Context, in *ListPipelinesRequest, opts ...grpc.CallOption) (*ListPipelinesResponse, error)
-	GetPipeline(ctx context.Context, in *GetPipelineRequest, opts ...grpc.CallOption) (*Pipeline, error)
-	CreatePipeline(ctx context.Context, in *CreatePipelineRequest, opts ...grpc.CallOption) (*Pipeline, error)
-	UpdatePipeline(ctx context.Context, in *UpdatePipelineRequest, opts ...grpc.CallOption) (*Pipeline, error)
-	DeletePipeline(ctx context.Context, in *DeletePipelineRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListPipelineJobs(ctx context.Context, in *ListPipelineJobsRequest, opts ...grpc.CallOption) (*ListPipelineJobsResponse, error)
+	GetPipleineJob(ctx context.Context, in *GetPipelineJobRequest, opts ...grpc.CallOption) (*PipelineJob, error)
+	CreatePipelineJob(ctx context.Context, in *CreatePipelineJobRequest, opts ...grpc.CallOption) (*PipelineJob, error)
+	UpdatePipelineJob(ctx context.Context, in *UpdatePipelineJobRequest, opts ...grpc.CallOption) (*PipelineJob, error)
+	DeletePipelineJob(ctx context.Context, in *DeletePipelineJobRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	RunPipelineJob(ctx context.Context, in *RunPipelineJobRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	ListPipelineJobExecutions(ctx context.Context, in *ListPipelineJobExecutionsRequest, opts ...grpc.CallOption) (*ListPipelineJobExecutionsResponse, error)
+	GetPipelineJobExecution(ctx context.Context, in *GetPipelineJobExecutionRequest, opts ...grpc.CallOption) (*PipelineJobExecution, error)
+	DeletePipelineJobExecution(ctx context.Context, in *DeletePipelineJobExecutionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type piperClient struct {
@@ -48,54 +55,81 @@ func NewPiperClient(cc grpc.ClientConnInterface) PiperClient {
 	return &piperClient{cc}
 }
 
-func (c *piperClient) HealthCheck(ctx context.Context, in *HealthCheckRequest, opts ...grpc.CallOption) (*HealthCheckResponse, error) {
-	out := new(HealthCheckResponse)
-	err := c.cc.Invoke(ctx, Piper_HealthCheck_FullMethodName, in, out, opts...)
+func (c *piperClient) ListPipelineJobs(ctx context.Context, in *ListPipelineJobsRequest, opts ...grpc.CallOption) (*ListPipelineJobsResponse, error) {
+	out := new(ListPipelineJobsResponse)
+	err := c.cc.Invoke(ctx, Piper_ListPipelineJobs_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *piperClient) ListPipelines(ctx context.Context, in *ListPipelinesRequest, opts ...grpc.CallOption) (*ListPipelinesResponse, error) {
-	out := new(ListPipelinesResponse)
-	err := c.cc.Invoke(ctx, Piper_ListPipelines_FullMethodName, in, out, opts...)
+func (c *piperClient) GetPipleineJob(ctx context.Context, in *GetPipelineJobRequest, opts ...grpc.CallOption) (*PipelineJob, error) {
+	out := new(PipelineJob)
+	err := c.cc.Invoke(ctx, Piper_GetPipleineJob_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *piperClient) GetPipeline(ctx context.Context, in *GetPipelineRequest, opts ...grpc.CallOption) (*Pipeline, error) {
-	out := new(Pipeline)
-	err := c.cc.Invoke(ctx, Piper_GetPipeline_FullMethodName, in, out, opts...)
+func (c *piperClient) CreatePipelineJob(ctx context.Context, in *CreatePipelineJobRequest, opts ...grpc.CallOption) (*PipelineJob, error) {
+	out := new(PipelineJob)
+	err := c.cc.Invoke(ctx, Piper_CreatePipelineJob_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *piperClient) CreatePipeline(ctx context.Context, in *CreatePipelineRequest, opts ...grpc.CallOption) (*Pipeline, error) {
-	out := new(Pipeline)
-	err := c.cc.Invoke(ctx, Piper_CreatePipeline_FullMethodName, in, out, opts...)
+func (c *piperClient) UpdatePipelineJob(ctx context.Context, in *UpdatePipelineJobRequest, opts ...grpc.CallOption) (*PipelineJob, error) {
+	out := new(PipelineJob)
+	err := c.cc.Invoke(ctx, Piper_UpdatePipelineJob_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *piperClient) UpdatePipeline(ctx context.Context, in *UpdatePipelineRequest, opts ...grpc.CallOption) (*Pipeline, error) {
-	out := new(Pipeline)
-	err := c.cc.Invoke(ctx, Piper_UpdatePipeline_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *piperClient) DeletePipeline(ctx context.Context, in *DeletePipelineRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *piperClient) DeletePipelineJob(ctx context.Context, in *DeletePipelineJobRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Piper_DeletePipeline_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Piper_DeletePipelineJob_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piperClient) RunPipelineJob(ctx context.Context, in *RunPipelineJobRequest, opts ...grpc.CallOption) (*longrunning.Operation, error) {
+	out := new(longrunning.Operation)
+	err := c.cc.Invoke(ctx, Piper_RunPipelineJob_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piperClient) ListPipelineJobExecutions(ctx context.Context, in *ListPipelineJobExecutionsRequest, opts ...grpc.CallOption) (*ListPipelineJobExecutionsResponse, error) {
+	out := new(ListPipelineJobExecutionsResponse)
+	err := c.cc.Invoke(ctx, Piper_ListPipelineJobExecutions_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piperClient) GetPipelineJobExecution(ctx context.Context, in *GetPipelineJobExecutionRequest, opts ...grpc.CallOption) (*PipelineJobExecution, error) {
+	out := new(PipelineJobExecution)
+	err := c.cc.Invoke(ctx, Piper_GetPipelineJobExecution_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *piperClient) DeletePipelineJobExecution(ctx context.Context, in *DeletePipelineJobExecutionRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Piper_DeletePipelineJobExecution_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,12 +140,15 @@ func (c *piperClient) DeletePipeline(ctx context.Context, in *DeletePipelineRequ
 // All implementations must embed UnimplementedPiperServer
 // for forward compatibility
 type PiperServer interface {
-	HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
-	ListPipelines(context.Context, *ListPipelinesRequest) (*ListPipelinesResponse, error)
-	GetPipeline(context.Context, *GetPipelineRequest) (*Pipeline, error)
-	CreatePipeline(context.Context, *CreatePipelineRequest) (*Pipeline, error)
-	UpdatePipeline(context.Context, *UpdatePipelineRequest) (*Pipeline, error)
-	DeletePipeline(context.Context, *DeletePipelineRequest) (*emptypb.Empty, error)
+	ListPipelineJobs(context.Context, *ListPipelineJobsRequest) (*ListPipelineJobsResponse, error)
+	GetPipleineJob(context.Context, *GetPipelineJobRequest) (*PipelineJob, error)
+	CreatePipelineJob(context.Context, *CreatePipelineJobRequest) (*PipelineJob, error)
+	UpdatePipelineJob(context.Context, *UpdatePipelineJobRequest) (*PipelineJob, error)
+	DeletePipelineJob(context.Context, *DeletePipelineJobRequest) (*emptypb.Empty, error)
+	RunPipelineJob(context.Context, *RunPipelineJobRequest) (*longrunning.Operation, error)
+	ListPipelineJobExecutions(context.Context, *ListPipelineJobExecutionsRequest) (*ListPipelineJobExecutionsResponse, error)
+	GetPipelineJobExecution(context.Context, *GetPipelineJobExecutionRequest) (*PipelineJobExecution, error)
+	DeletePipelineJobExecution(context.Context, *DeletePipelineJobExecutionRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPiperServer()
 }
 
@@ -119,23 +156,32 @@ type PiperServer interface {
 type UnimplementedPiperServer struct {
 }
 
-func (UnimplementedPiperServer) HealthCheck(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
+func (UnimplementedPiperServer) ListPipelineJobs(context.Context, *ListPipelineJobsRequest) (*ListPipelineJobsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPipelineJobs not implemented")
 }
-func (UnimplementedPiperServer) ListPipelines(context.Context, *ListPipelinesRequest) (*ListPipelinesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListPipelines not implemented")
+func (UnimplementedPiperServer) GetPipleineJob(context.Context, *GetPipelineJobRequest) (*PipelineJob, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPipleineJob not implemented")
 }
-func (UnimplementedPiperServer) GetPipeline(context.Context, *GetPipelineRequest) (*Pipeline, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetPipeline not implemented")
+func (UnimplementedPiperServer) CreatePipelineJob(context.Context, *CreatePipelineJobRequest) (*PipelineJob, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePipelineJob not implemented")
 }
-func (UnimplementedPiperServer) CreatePipeline(context.Context, *CreatePipelineRequest) (*Pipeline, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePipeline not implemented")
+func (UnimplementedPiperServer) UpdatePipelineJob(context.Context, *UpdatePipelineJobRequest) (*PipelineJob, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePipelineJob not implemented")
 }
-func (UnimplementedPiperServer) UpdatePipeline(context.Context, *UpdatePipelineRequest) (*Pipeline, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdatePipeline not implemented")
+func (UnimplementedPiperServer) DeletePipelineJob(context.Context, *DeletePipelineJobRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePipelineJob not implemented")
 }
-func (UnimplementedPiperServer) DeletePipeline(context.Context, *DeletePipelineRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeletePipeline not implemented")
+func (UnimplementedPiperServer) RunPipelineJob(context.Context, *RunPipelineJobRequest) (*longrunning.Operation, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RunPipelineJob not implemented")
+}
+func (UnimplementedPiperServer) ListPipelineJobExecutions(context.Context, *ListPipelineJobExecutionsRequest) (*ListPipelineJobExecutionsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPipelineJobExecutions not implemented")
+}
+func (UnimplementedPiperServer) GetPipelineJobExecution(context.Context, *GetPipelineJobExecutionRequest) (*PipelineJobExecution, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPipelineJobExecution not implemented")
+}
+func (UnimplementedPiperServer) DeletePipelineJobExecution(context.Context, *DeletePipelineJobExecutionRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePipelineJobExecution not implemented")
 }
 func (UnimplementedPiperServer) mustEmbedUnimplementedPiperServer() {}
 
@@ -150,110 +196,164 @@ func RegisterPiperServer(s grpc.ServiceRegistrar, srv PiperServer) {
 	s.RegisterService(&Piper_ServiceDesc, srv)
 }
 
-func _Piper_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HealthCheckRequest)
+func _Piper_ListPipelineJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPipelineJobsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PiperServer).HealthCheck(ctx, in)
+		return srv.(PiperServer).ListPipelineJobs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Piper_HealthCheck_FullMethodName,
+		FullMethod: Piper_ListPipelineJobs_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiperServer).HealthCheck(ctx, req.(*HealthCheckRequest))
+		return srv.(PiperServer).ListPipelineJobs(ctx, req.(*ListPipelineJobsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Piper_ListPipelines_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListPipelinesRequest)
+func _Piper_GetPipleineJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPipelineJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PiperServer).ListPipelines(ctx, in)
+		return srv.(PiperServer).GetPipleineJob(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Piper_ListPipelines_FullMethodName,
+		FullMethod: Piper_GetPipleineJob_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiperServer).ListPipelines(ctx, req.(*ListPipelinesRequest))
+		return srv.(PiperServer).GetPipleineJob(ctx, req.(*GetPipelineJobRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Piper_GetPipeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPipelineRequest)
+func _Piper_CreatePipelineJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatePipelineJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PiperServer).GetPipeline(ctx, in)
+		return srv.(PiperServer).CreatePipelineJob(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Piper_GetPipeline_FullMethodName,
+		FullMethod: Piper_CreatePipelineJob_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiperServer).GetPipeline(ctx, req.(*GetPipelineRequest))
+		return srv.(PiperServer).CreatePipelineJob(ctx, req.(*CreatePipelineJobRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Piper_CreatePipeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePipelineRequest)
+func _Piper_UpdatePipelineJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePipelineJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PiperServer).CreatePipeline(ctx, in)
+		return srv.(PiperServer).UpdatePipelineJob(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Piper_CreatePipeline_FullMethodName,
+		FullMethod: Piper_UpdatePipelineJob_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiperServer).CreatePipeline(ctx, req.(*CreatePipelineRequest))
+		return srv.(PiperServer).UpdatePipelineJob(ctx, req.(*UpdatePipelineJobRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Piper_UpdatePipeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdatePipelineRequest)
+func _Piper_DeletePipelineJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePipelineJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PiperServer).UpdatePipeline(ctx, in)
+		return srv.(PiperServer).DeletePipelineJob(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Piper_UpdatePipeline_FullMethodName,
+		FullMethod: Piper_DeletePipelineJob_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiperServer).UpdatePipeline(ctx, req.(*UpdatePipelineRequest))
+		return srv.(PiperServer).DeletePipelineJob(ctx, req.(*DeletePipelineJobRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Piper_DeletePipeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeletePipelineRequest)
+func _Piper_RunPipelineJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunPipelineJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PiperServer).DeletePipeline(ctx, in)
+		return srv.(PiperServer).RunPipelineJob(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Piper_DeletePipeline_FullMethodName,
+		FullMethod: Piper_RunPipelineJob_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PiperServer).DeletePipeline(ctx, req.(*DeletePipelineRequest))
+		return srv.(PiperServer).RunPipelineJob(ctx, req.(*RunPipelineJobRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Piper_ListPipelineJobExecutions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPipelineJobExecutionsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiperServer).ListPipelineJobExecutions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Piper_ListPipelineJobExecutions_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiperServer).ListPipelineJobExecutions(ctx, req.(*ListPipelineJobExecutionsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Piper_GetPipelineJobExecution_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPipelineJobExecutionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiperServer).GetPipelineJobExecution(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Piper_GetPipelineJobExecution_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiperServer).GetPipelineJobExecution(ctx, req.(*GetPipelineJobExecutionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Piper_DeletePipelineJobExecution_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePipelineJobExecutionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PiperServer).DeletePipelineJobExecution(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Piper_DeletePipelineJobExecution_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PiperServer).DeletePipelineJobExecution(ctx, req.(*DeletePipelineJobExecutionRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -266,28 +366,40 @@ var Piper_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PiperServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "HealthCheck",
-			Handler:    _Piper_HealthCheck_Handler,
+			MethodName: "ListPipelineJobs",
+			Handler:    _Piper_ListPipelineJobs_Handler,
 		},
 		{
-			MethodName: "ListPipelines",
-			Handler:    _Piper_ListPipelines_Handler,
+			MethodName: "GetPipleineJob",
+			Handler:    _Piper_GetPipleineJob_Handler,
 		},
 		{
-			MethodName: "GetPipeline",
-			Handler:    _Piper_GetPipeline_Handler,
+			MethodName: "CreatePipelineJob",
+			Handler:    _Piper_CreatePipelineJob_Handler,
 		},
 		{
-			MethodName: "CreatePipeline",
-			Handler:    _Piper_CreatePipeline_Handler,
+			MethodName: "UpdatePipelineJob",
+			Handler:    _Piper_UpdatePipelineJob_Handler,
 		},
 		{
-			MethodName: "UpdatePipeline",
-			Handler:    _Piper_UpdatePipeline_Handler,
+			MethodName: "DeletePipelineJob",
+			Handler:    _Piper_DeletePipelineJob_Handler,
 		},
 		{
-			MethodName: "DeletePipeline",
-			Handler:    _Piper_DeletePipeline_Handler,
+			MethodName: "RunPipelineJob",
+			Handler:    _Piper_RunPipelineJob_Handler,
+		},
+		{
+			MethodName: "ListPipelineJobExecutions",
+			Handler:    _Piper_ListPipelineJobExecutions_Handler,
+		},
+		{
+			MethodName: "GetPipelineJobExecution",
+			Handler:    _Piper_GetPipelineJobExecution_Handler,
+		},
+		{
+			MethodName: "DeletePipelineJobExecution",
+			Handler:    _Piper_DeletePipelineJobExecution_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
